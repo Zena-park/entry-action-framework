@@ -1232,7 +1232,7 @@ This appendix provides fully formalized proofs for the main theorems in the body
 - $\lambda$: Security parameter
 - $\text{negl}(\lambda)$: Negligible function, i.e., for all polynomials $p$, for sufficiently large $\lambda$, $\text{negl}(\lambda) < 1/p(\lambda)$
 - $\text{PPT}$: Probabilistic Polynomial Time
-- $a \xleftarrow{\$} S$: Uniformly random selection of $a$ from set $S$
+- $a \overset{\$}{\leftarrow} S$: Uniformly random selection of $a$ from set $S$
 - $[n]$: Set $\{1, 2, ..., n\}$
 
 **Definition A.1 (Computational Indistinguishability)**: Two probability distributions $X = \{X_\lambda\}_{\lambda \in \mathbb{N}}$ and $Y = \{Y_\lambda\}_{\lambda \in \mathbb{N}}$ are computationally indistinguishable ($X \approx_c Y$) if for all PPT distinguishers $D$:
@@ -1429,12 +1429,12 @@ for (var t = 0; t < 3; t++) {
 
 For a valid state transition, $\text{StateTransition}$ constructs witness $w$:
 
-$$w = (\{\text{merkle\_proofs}_i\}_{i=1}^n, \{\text{old\_states}_i\}_{i=1}^n, \{\text{signatures}_i\}_{i=1}^n)$$
+$$w = (\{\mathit{merkle\_proofs}_i\}_{i=1}^n, \{\mathit{old\_states}_i\}_{i=1}^n, \{\mathit{signatures}_i\}_{i=1}^n)$$
 
 where:
-- $\text{merkle\_proofs}_i$: Merkle proof for state read by transaction $i$
-- $\text{old\_states}_i$: State before execution of transaction $i$
-- $\text{signatures}_i$: Signature of transaction $i$
+- $\mathit{merkle\_proofs}_i$: Merkle proof for state read by transaction $i$
+- $\mathit{old\_states}_i$: State before execution of transaction $i$
+- $\mathit{signatures}_i$: Signature of transaction $i$
 
 **Step 4: Proof of Constraint Satisfaction**
 

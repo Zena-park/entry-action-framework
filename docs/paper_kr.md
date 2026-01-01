@@ -1215,7 +1215,7 @@ UI: 매치 인터페이스, 호환성 점수
 - $\lambda$: 보안 파라미터
 - $\text{negl}(\lambda)$: 무시할 수 있는 함수, 즉 모든 다항식 $p$에 대해 충분히 큰 $\lambda$에서 $\text{negl}(\lambda) < 1/p(\lambda)$
 - $\text{PPT}$: 확률적 다항 시간 (Probabilistic Polynomial Time)
-- $a \xleftarrow{\$} S$: 집합 $S$에서 균등하게 무작위로 $a$를 선택
+- $a \overset{\$}{\leftarrow} S$: 집합 $S$에서 균등하게 무작위로 $a$를 선택
 - $[n]$: 집합 $\{1, 2, ..., n\}$
 
 **정의 A.1 (계산적 구별 불가능성)**: 두 확률 분포 $X = \{X_\lambda\}_{\lambda \in \mathbb{N}}$와 $Y = \{Y_\lambda\}_{\lambda \in \mathbb{N}}$가 계산적으로 구별 불가능하다 ($X \approx_c Y$)는 것은, 모든 PPT 구별자 $D$에 대해
@@ -1414,12 +1414,12 @@ for (var t = 0; t < 3; t++) {
 
 유효한 상태 전이에 대해, $\text{StateTransition}$은 witness $w$를 구성:
 
-$$w = (\{\text{merkle\_proofs}_i\}_{i=1}^n, \{\text{old\_states}_i\}_{i=1}^n, \{\text{signatures}_i\}_{i=1}^n)$$
+$$w = (\{\mathit{merkle\_proofs}_i\}_{i=1}^n, \{\mathit{old\_states}_i\}_{i=1}^n, \{\mathit{signatures}_i\}_{i=1}^n)$$
 
 여기서:
-- $\text{merkle\_proofs}_i$: 트랜잭션 $i$가 읽는 상태에 대한 Merkle proof
-- $\text{old\_states}_i$: 트랜잭션 $i$ 실행 전 상태
-- $\text{signatures}_i$: 트랜잭션 $i$의 서명
+- $\mathit{merkle\_proofs}_i$: 트랜잭션 $i$가 읽는 상태에 대한 Merkle proof
+- $\mathit{old\_states}_i$: 트랜잭션 $i$ 실행 전 상태
+- $\mathit{signatures}_i$: 트랜잭션 $i$의 서명
 
 **Step 4: 제약 조건 만족 증명**
 

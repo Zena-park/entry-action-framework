@@ -386,7 +386,7 @@ $$\phi(v) = 1 \iff v \text{가 진입 요구사항을 만족함}$$
 
 **정의 4.1 (진입 행동)**: 진입 행동은 검증 가능한 온체인 조건이다:
 
-$$\phi(v) = 1 \iff \exists \text{ 증명 } \pi : \text{Verify}(\pi, v, \text{요구사항}) = 1$$
+$$\phi(v) = 1 \iff \exists \text{ 증명 } \pi : \mathrm{Verify}(\pi, v, \text{요구사항}) = 1$$
 
 **예시**:
 - 토큰 보유: $\pi$ = 잔액 증명, 요구사항 = 최소 금액
@@ -565,7 +565,7 @@ $$(\mathcal{T}_{\mathit{old}}, B) \xrightarrow{\text{Process}} (\mathcal{T}_{\ma
 - 새로운 Merkle root가 정확하게 계산됨
 
 **온체인 검증**:
-$$\text{Verify}(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \rightarrow \{0, 1\}$$
+$$\mathrm{Verify}(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \rightarrow \{0, 1\}$$
 
 스마트 컨트랙트는 증명 $\pi$를 검증하고, 통과하면 새로운 상태 루트 $\mathcal{T}_{\mathit{new}}$를 수용한다. 이 검증은 배치 크기와 무관하게 상수 시간에 수행되므로, 배치가 클수록 트랜잭션당 가스 비용이 낮아진다.
 
@@ -1213,14 +1213,14 @@ UI: 매치 인터페이스, 호환성 점수
 
 **표기법:**
 - $\lambda$: 보안 파라미터
-- $\text{negl}(\lambda)$: 무시할 수 있는 함수, 즉 모든 다항식 $p$에 대해 충분히 큰 $\lambda$에서 $\text{negl}(\lambda) < 1/p(\lambda)$
-- $\text{PPT}$: 확률적 다항 시간 (Probabilistic Polynomial Time)
+- $\mathrm{negl}(\lambda)$: 무시할 수 있는 함수, 즉 모든 다항식 $p$에 대해 충분히 큰 $\lambda$에서 $\mathrm{negl}(\lambda) < 1/p(\lambda)$
+- $\mathrm{PPT}$: 확률적 다항 시간 (Probabilistic Polynomial Time)
 - $a \stackrel{R}{\leftarrow} S$: 집합 $S$에서 균등하게 무작위로 $a$를 선택
 - $[n]$: 집합 $\{1, 2, ..., n\}$
 
 **정의 A.1 (계산적 구별 불가능성)**: 두 확률 분포 $X = (X_\lambda)_{\lambda \in \mathbb{N}}$와 $Y = (Y_\lambda)_{\lambda \in \mathbb{N}}$가 계산적으로 구별 불가능하다 ($X \approx_c Y$)는 것은, 모든 PPT 구별자 $D$에 대해
 
-$$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \right| \leq \text{negl}(\lambda)$$
+$$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \right| \leq \mathrm{negl}(\lambda)$$
 
 가 성립함을 의미한다.
 
@@ -1228,12 +1228,12 @@ $$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \ri
 
 **정의 A.2 (ZK-Rollup 시스템)**: ZK-Rollup 시스템 $\Pi$는 다음 알고리즘들의 튜플이다:
 
-$$\Pi = (\text{Setup}, \text{Prove}, \text{Verify}, \text{StateTransition})$$
+$$\Pi = (\mathrm{Setup}, \mathrm{Prove}, \mathrm{Verify}, \mathrm{StateTransition})$$
 
-- $\text{Setup}(1^\lambda) \rightarrow \text{pp}$: 공개 파라미터 생성
-- $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \rightarrow (\mathcal{T}_{\mathit{new}}, w)$: 상태 전이 및 witness 생성
-- $\text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \rightarrow \pi$: 증명 생성
-- $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) \rightarrow (0, 1)$: 증명 검증
+- $\mathrm{Setup}(1^\lambda) \rightarrow \mathrm{pp}$: 공개 파라미터 생성
+- $\mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \rightarrow (\mathcal{T}_{\mathit{new}}, w)$: 상태 전이 및 witness 생성
+- $\mathrm{Prove}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \rightarrow \pi$: 증명 생성
+- $\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) \rightarrow (0, 1)$: 증명 검증
 
 여기서 $\mathcal{T}$는 Sparse Merkle Tree 루트, $B$는 트랜잭션 배치, $w$는 witness (Merkle proofs 등), $H$는 해시 함수이다.
 
@@ -1241,7 +1241,7 @@ $$\Pi = (\text{Setup}, \text{Prove}, \text{Verify}, \text{StateTransition})$$
 
 **정리 7.1 (건전성 - 재서술)**: SYB의 ZK-Rollup 시스템 $\Pi$에 대해, 모든 PPT 공격자 $\mathcal{A}$에 대하여
 
-$$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] \leq \text{negl}(\lambda)$$
+$$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] \leq \mathrm{negl}(\lambda)$$
 
 가 성립한다. 여기서 Soundness-Game은 다음과 같이 정의된다:
 
@@ -1264,42 +1264,42 @@ $$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] \leq \text{negl}(\la
 
 Groth16[22]의 건전성은 다음과 같이 정의된다:
 
-**가정 A.1 (Groth16 건전성)**: Groth16 증명 시스템 $\text{Groth16} = (G.\text{Setup}, G.\text{Prove}, G.\text{Verify})$에 대해, 모든 PPT 공격자 $\mathcal{B}$에 대하여
+**가정 A.1 (Groth16 건전성)**: Groth16 증명 시스템 $\text{Groth16} = (G.\mathrm{Setup}, G.\mathrm{Prove}, G.\mathrm{Verify})$에 대해, 모든 PPT 공격자 $\mathcal{B}$에 대하여
 
 $$\Pr\left[\begin{array}{l}
-(\text{crs}, \tau) \leftarrow G.\text{Setup}(1^\lambda, C) \\
-(x, \pi) \leftarrow \mathcal{B}(\text{crs}) \\
-G.\text{Verify}(\text{crs}, x, \pi) = 1 \land \nexists w : C(x, w) = 1
-\end{array}\right] \leq \text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda)$$
+(\mathrm{crs}, \tau) \leftarrow G.\mathrm{Setup}(1^\lambda, C) \\
+(x, \pi) \leftarrow \mathcal{B}(\mathrm{crs}) \\
+G.\mathrm{Verify}(\mathrm{crs}, x, \pi) = 1 \land \nexists w : C(x, w) = 1
+\end{array}\right] \leq \mathrm{Adv}_{\mathcal{B}}^{\mathrm{Groth16\text{-}Sound}}(\lambda)$$
 
-여기서 $\text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda) \leq \text{negl}(\lambda)$ (BN254 curve의 이산 로그 가정 하에서).
+여기서 $\mathrm{Adv}_{\mathcal{B}}^{\mathrm{Groth16\text{-}Sound}}(\lambda) \leq \mathrm{negl}(\lambda)$ (BN254 curve의 이산 로그 가정 하에서).
 
 **Step 2: Reduction 알고리즘 구성**
 
 SYB의 건전성을 깨는 PPT 공격자 $\mathcal{A}$가 존재한다고 가정하자. 우리는 $\mathcal{A}$를 사용하여 Groth16의 건전성을 깨는 알고리즘 $\mathcal{B}$를 구성한다.
 
-**알고리즘 $\mathcal{B}^{\mathcal{A}}(\text{crs})$:** (Groth16 challenger로부터 crs를 받음)
+**알고리즘 $\mathcal{B}^{\mathcal{A}}(\mathrm{crs})$:** (Groth16 challenger로부터 crs를 받음)
 
 1. **Setup 시뮬레이션:**
-   - SYB의 공개 파라미터 $\text{pp}$를 구성:
+   - SYB의 공개 파라미터 $\mathrm{pp}$를 구성:
      - Poseidon 해시 파라미터
-     - Groth16 검증 키 $\text{vk} \subset \text{crs}$
+     - Groth16 검증 키 $\mathrm{vk} \subset \mathrm{crs}$
      - Merkle tree 깊이 $\text{nLevels} = 24$
-   - $\text{pp}$를 $\mathcal{A}$에게 전달
+   - $\mathrm{pp}$를 $\mathcal{A}$에게 전달
 
 2. **공격자 실행:**
-   - $(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \leftarrow \mathcal{A}(\text{pp})$
+   - $(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \leftarrow \mathcal{A}(\mathrm{pp})$
 
 3. **검증:**
-   - If $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 0$: **Abort** (공격 실패)
+   - If $\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 0$: **Abort** (공격 실패)
 
 4. **잘못된 상태 전이 확인:**
    - 모든 가능한 배치 $B'$에 대해 (해시가 $B_{\mathit{hash}}$와 일치):
-     - $(\mathcal{T}', w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B')$
+     - $(\mathcal{T}', w) \leftarrow \mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B')$
      - If $\mathcal{T}' = \mathcal{T}_{\mathit{new}}$: **Abort** (상태 전이가 올바름, 공격 아님)
 
 5. **Groth16 공격 구성:**
-   - 회로 $C_{\text{SYB}}$의 공개 입력: $x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$
+   - 회로 $C_{\mathrm{SYB}}$의 공개 입력: $x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$
    - Groth16 증명: $\pi$
    - Return $(x, \pi)$
 
@@ -1307,32 +1307,32 @@ SYB의 건전성을 깨는 PPT 공격자 $\mathcal{A}$가 존재한다고 가정
 
 $\mathcal{A}$가 성공하는 경우를 분석하자. $\mathcal{A}$가 Soundness-Game에서 이기려면:
 
-(a) $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 1$ (검증 통과)
+(a) $\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 1$ (검증 통과)
 
-(b) 모든 유효한 배치 $B'$ (with $H(B') = B_{\mathit{hash}}$)에 대해, $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B') \neq \mathcal{T}_{\mathit{new}}$ (잘못된 상태)
+(b) 모든 유효한 배치 $B'$ (with $H(B') = B_{\mathit{hash}}$)에 대해, $\mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B') \neq \mathcal{T}_{\mathit{new}}$ (잘못된 상태)
 
 조건 (a)는 다음을 의미한다:
-$$G.\text{Verify}(\text{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$$
+$$G.\mathrm{Verify}(\mathrm{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$$
 
-조건 (b)와 회로 $C_{\text{SYB}}$의 정의에 의해:
-- $C_{\text{SYB}}$는 다음을 검증: 주어진 $(\mathcal{T}_{\mathit{old}}, B, \mathit{merkle\_proofs})$에 대해, $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B)$가 올바르게 $\mathcal{T}_{\mathit{new}}$를 생성하는지
+조건 (b)와 회로 $C_{\mathrm{SYB}}$의 정의에 의해:
+- $C_{\mathrm{SYB}}$는 다음을 검증: 주어진 $(\mathcal{T}_{\mathit{old}}, B, \mathit{merkle\_proofs})$에 대해, $\mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B)$가 올바르게 $\mathcal{T}_{\mathit{new}}$를 생성하는지
 - 조건 (b)가 성립하면, 공개 입력 $x$에 대해 회로를 만족시키는 witness $w$가 **존재하지 않음**
-- 즉, $\nexists w : C_{\text{SYB}}(x, w) = 1$
+- 즉, $\nexists w : C_{\mathrm{SYB}}(x, w) = 1$
 
 따라서 $\mathcal{A}$가 성공하면, $\mathcal{B}$는 Groth16 건전성을 깬다:
 
 $$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] = \Pr\left[\begin{array}{l}
-G.\text{Verify}(\text{crs}, x, \pi) = 1 \\
-\land \nexists w : C_{\text{SYB}}(x, w) = 1
+G.\mathrm{Verify}(\mathrm{crs}, x, \pi) = 1 \\
+\land \nexists w : C_{\mathrm{SYB}}(x, w) = 1
 \end{array}\right]$$
 
-$$= \text{Adv}_{\mathcal{B}^{\mathcal{A}}}^{\text{Groth16-Sound}}(\lambda) \leq \text{negl}(\lambda)$$
+$$= \mathrm{Adv}_{\mathcal{B}^{\mathcal{A}}}^{\mathrm{Groth16\text{-}Sound}}(\lambda) \leq \mathrm{negl}(\lambda)$$
 
 **Step 4: Concrete Security Bound**
 
 Groth16의 건전성은 BN254 curve의 이산 로그 문제의 어려움에 기반한다. Concrete bound는:
 
-$$\text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda) \leq \frac{q_V \cdot (d+1)}{|G_1|}$$
+$$\mathrm{Adv}_{\mathcal{B}}^{\mathrm{Groth16\text{-}Sound}}(\lambda) \leq \frac{q_V \cdot (d+1)}{|G_1|}$$
 
 여기서:
 - $q_V$: 검증 쿼리 수 (여기서는 1)
@@ -1340,7 +1340,7 @@ $$\text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda) \leq \frac{q_V \cdot 
 - $|G_1|$: BN254 곡선 위의 점 개수 ($\approx 2^{254}$)
 
 따라서:
-$$\text{Adv}_{\mathcal{A}}^{\text{SYB-Sound}}(\lambda) \leq \frac{2^{20} + 1}{2^{254}} \approx 2^{-234}$$
+$$\mathrm{Adv}_{\mathcal{A}}^{\text{SYB-Sound}}(\lambda) \leq \frac{2^{20} + 1}{2^{254}} \approx 2^{-234}$$
 
 이는 무시할 수 있는 확률이다. ∎
 
@@ -1351,10 +1351,10 @@ $$\text{Adv}_{\mathcal{A}}^{\text{SYB-Sound}}(\lambda) \leq \frac{2^{20} + 1}{2^
 **정리 7.2 (완전성 - 재서술)**: SYB의 ZK-Rollup 시스템 $\Pi$에 대해, 모든 유효한 상태 전이에 대하여
 
 $$\Pr\left[\begin{array}{l}
-\text{pp} \leftarrow \text{Setup}(1^\lambda) \\
-(\mathcal{T}_{\mathit{new}}, w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \\
-\pi \leftarrow \text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \\
-\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 0
+\mathrm{pp} \leftarrow \mathrm{Setup}(1^\lambda) \\
+(\mathcal{T}_{\mathit{new}}, w) \leftarrow \mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \\
+\pi \leftarrow \mathrm{Prove}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \\
+\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 0
 \end{array}\right] = 0$$
 
 즉, 정직한 증명자는 항상 수용되는 증명을 생성할 수 있다.
@@ -1374,7 +1374,7 @@ $$\Pr\left[\begin{array}{l}
 
 **Step 2: 회로 제약 조건과의 대응**
 
-SYB 회로 $C_{\text{SYB}}$는 다음 제약 조건들을 포함:
+SYB 회로 $C_{\mathrm{SYB}}$는 다음 제약 조건들을 포함:
 
 **제약 1: 서명 검증**
 ```circom
@@ -1412,7 +1412,7 @@ for (var t = 0; t < 3; t++) {
 
 **Step 3: Witness 구성**
 
-유효한 상태 전이에 대해, $\text{StateTransition}$은 witness $w$를 구성:
+유효한 상태 전이에 대해, $\mathrm{StateTransition}$은 witness $w$를 구성:
 
 $$w = (\{\mathit{merkle\_proofs}_i\}_{i=1}^n, \{\mathit{old\_states}_i\}_{i=1}^n, \{\mathit{signatures}_i\}_{i=1}^n)$$
 
@@ -1444,14 +1444,14 @@ $$w = (\{\mathit{merkle\_proofs}_i\}_{i=1}^n, \{\mathit{old\_states}_i\}_{i=1}^n
 **Step 5: Groth16 완전성 적용**
 
 모든 제약 조건이 만족되므로:
-$$C_{\text{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B))$$
+$$C_{\mathrm{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B))$$
 
 Groth16의 완전성(Completeness) 속성에 의해:
 - 회로를 만족시키는 $(x, w)$가 존재하면
-- $\text{Prove}$는 항상 수용되는 증명 $\pi$를 생성
+- $\mathrm{Prove}$는 항상 수용되는 증명 $\pi$를 생성
 
 따라서:
-$$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 1] = 1$$
+$$\Pr[\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 1] = 1$$
 
 즉, 거부 확률은 0이다. ∎
 
@@ -1463,7 +1463,7 @@ $$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{
 
 모든 스코어링 함수 $s: V \rightarrow \mathbb{R}^+$와 임계값 $\theta$에 대해, 다음을 만족하는 공격자 전략이 존재한다:
 
-$$\exists \text{ 공격자 } \mathcal{A} : \Pr\left[\frac{1}{k}\sum_{i=1}^k s(A_i) \geq \theta \mid \mathcal{A} \text{ 생성한 } \{A_1, ..., A_k\}\right] \geq 1 - \text{negl}(k, m)$$
+$$\exists \text{ 공격자 } \mathcal{A} : \Pr\left[\frac{1}{k}\sum_{i=1}^k s(A_i) \geq \theta \mid \mathcal{A} \text{ 생성한 } \{A_1, ..., A_k\}\right] \geq 1 - \mathrm{negl}(k, m)$$
 
 여기서 $k$는 생성한 주소 수, $m$은 정직한 사용자로부터 얻은 보증 수이다.
 
@@ -1565,7 +1565,7 @@ $$\frac{1}{k}\sum_{i=1}^k s(A_i) \geq \bar{s}_{\text{honest}}$$
 
 $$\Pr[\mathcal{A}_{\text{sophisticated}} \text{ 승리}] \geq (1 - \epsilon_\phi) \cdot (1 - \epsilon_m) \cdot 1$$
 
-$$\geq 1 - \epsilon_\phi - \epsilon_m \geq 1 - \text{negl}(k, m)$$
+$$\geq 1 - \epsilon_\phi - \epsilon_m \geq 1 - \mathrm{negl}(k, m)$$
 
 따라서 공격자는 거의 확실하게 성공한다. ∎
 
@@ -1579,7 +1579,7 @@ $$\forall \text{ 공격자 } \mathcal{A} : \Pr[\mathcal{A} \text{ 승리}] \leq 
 
 그러나 정리 3.1은 다음을 만족하는 $\mathcal{A}_{\text{sophisticated}}$가 존재함을 보였다:
 
-$$\Pr[\mathcal{A}_{\text{sophisticated}} \text{ 승리}] \geq 1 - \text{negl}(k, m) > 1/2$$
+$$\Pr[\mathcal{A}_{\text{sophisticated}} \text{ 승리}] \geq 1 - \mathrm{negl}(k, m) > 1/2$$
 
 (충분히 큰 $k, m$에 대해)
 
@@ -1597,7 +1597,7 @@ $$\sum_{v \in S} s_{\text{set}}(v) \leq m$$
 
 **정리 5.4의 형식적 서술**:
 
-모든 PPT 알고리즘 $\mathcal{A}$에 대해, 다음 게임에서 $\mathcal{A}$의 성공 확률은 $1/2 + \text{negl}(n)$이다:
+모든 PPT 알고리즘 $\mathcal{A}$에 대해, 다음 게임에서 $\mathcal{A}$의 성공 확률은 $1/2 + \mathrm{negl}(n)$이다:
 
 **게임 Identify-Sybils$_{\mathcal{A}}(n)$:**
 ```

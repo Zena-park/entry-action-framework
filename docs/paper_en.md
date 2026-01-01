@@ -380,7 +380,7 @@ If the attacker socially engineers honest users to obtain vouches, the resulting
 
 **Definition 4.1 (Entry Action)**: An entry action is a verifiable on-chain condition:
 
-$$\phi(v) = 1 \iff \exists \text{ proof } \pi : \text{Verify}(\pi, v, \text{requirements}) = 1$$
+$$\phi(v) = 1 \iff \exists \text{ proof } \pi : \mathrm{Verify}(\pi, v, \text{requirements}) = 1$$
 
 **Examples**:
 - Token holding: $\pi$ = balance proof, requirement = minimum amount
@@ -559,7 +559,7 @@ where $\pi$ is a zero-knowledge proof proving:
 - New Merkle root calculated correctly
 
 **On-chain Verification**:
-$$\text{Verify}(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \rightarrow \{0, 1\}$$
+$$\mathrm{Verify}(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \rightarrow \{0, 1\}$$
 
 The smart contract verifies proof $\pi$ and, if it passes, accepts the new state root $\mathcal{T}_{\mathit{new}}$. This verification is performed in constant time regardless of batch size, so larger batches result in lower gas costs per transaction.
 
@@ -1230,25 +1230,25 @@ This appendix provides fully formalized proofs for the main theorems in the body
 
 **Notation:**
 - $\lambda$: Security parameter
-- $\text{negl}(\lambda)$: Negligible function, i.e., for all polynomials $p$, for sufficiently large $\lambda$, $\text{negl}(\lambda) < 1/p(\lambda)$
-- $\text{PPT}$: Probabilistic Polynomial Time
+- $\mathrm{negl}(\lambda)$: Negligible function, i.e., for all polynomials $p$, for sufficiently large $\lambda$, $\mathrm{negl}(\lambda) < 1/p(\lambda)$
+- $\mathrm{PPT}$: Probabilistic Polynomial Time
 - $a \stackrel{R}{\leftarrow} S$: Uniformly random selection of $a$ from set $S$
 - $[n]$: Set $\{1, 2, ..., n\}$
 
 **Definition A.1 (Computational Indistinguishability)**: Two probability distributions $X = (X_\lambda)_{\lambda \in \mathbb{N}}$ and $Y = (Y_\lambda)_{\lambda \in \mathbb{N}}$ are computationally indistinguishable ($X \approx_c Y$) if for all PPT distinguishers $D$:
 
-$$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \right| \leq \text{negl}(\lambda)$$
+$$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \right| \leq \mathrm{negl}(\lambda)$$
 
 #### A.1.2 Formal Definition of Zero-Knowledge Rollup System
 
 **Definition A.2 (ZK-Rollup System)**: A ZK-Rollup system $\Pi$ is a tuple of the following algorithms:
 
-$$\Pi = (\text{Setup}, \text{Prove}, \text{Verify}, \text{StateTransition})$$
+$$\Pi = (\mathrm{Setup}, \mathrm{Prove}, \mathrm{Verify}, \mathrm{StateTransition})$$
 
-- $\text{Setup}(1^\lambda) \rightarrow \text{pp}$: Generate public parameters
-- $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \rightarrow (\mathcal{T}_{\mathit{new}}, w)$: State transition and witness generation
-- $\text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \rightarrow \pi$: Proof generation
-- $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) \rightarrow (0, 1)$: Proof verification
+- $\mathrm{Setup}(1^\lambda) \rightarrow \mathrm{pp}$: Generate public parameters
+- $\mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \rightarrow (\mathcal{T}_{\mathit{new}}, w)$: State transition and witness generation
+- $\mathrm{Prove}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \rightarrow \pi$: Proof generation
+- $\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) \rightarrow (0, 1)$: Proof verification
 
 where $\mathcal{T}$ is a Sparse Merkle Tree root, $B$ is a transaction batch, $w$ is a witness (Merkle proofs, etc.), and $H$ is a hash function.
 
@@ -1256,7 +1256,7 @@ where $\mathcal{T}$ is a Sparse Merkle Tree root, $B$ is a transaction batch, $w
 
 **Theorem 7.1 (Soundness - Restated)**: For SYB's ZK-Rollup system $\Pi$, for all PPT attackers $\mathcal{A}$:
 
-$$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] \leq \text{negl}(\lambda)$$
+$$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] \leq \mathrm{negl}(\lambda)$$
 
 where Soundness-Game is defined as follows:
 
@@ -1279,42 +1279,42 @@ We reduce SYB's soundness to the soundness of the Groth16 proof system.
 
 The soundness of Groth16[22] is defined as:
 
-**Assumption A.1 (Groth16 Soundness)**: For the Groth16 proof system $\text{Groth16} = (G.\text{Setup}, G.\text{Prove}, G.\text{Verify})$, for all PPT attackers $\mathcal{B}$:
+**Assumption A.1 (Groth16 Soundness)**: For the Groth16 proof system $\text{Groth16} = (G.\mathrm{Setup}, G.\mathrm{Prove}, G.\mathrm{Verify})$, for all PPT attackers $\mathcal{B}$:
 
 $$\Pr\left[\begin{array}{l}
-(\text{crs}, \tau) \leftarrow G.\text{Setup}(1^\lambda, C) \\
-(x, \pi) \leftarrow \mathcal{B}(\text{crs}) \\
-G.\text{Verify}(\text{crs}, x, \pi) = 1 \land \nexists w : C(x, w) = 1
-\end{array}\right] \leq \text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda)$$
+(\mathrm{crs}, \tau) \leftarrow G.\mathrm{Setup}(1^\lambda, C) \\
+(x, \pi) \leftarrow \mathcal{B}(\mathrm{crs}) \\
+G.\mathrm{Verify}(\mathrm{crs}, x, \pi) = 1 \land \nexists w : C(x, w) = 1
+\end{array}\right] \leq \mathrm{Adv}_{\mathcal{B}}^{\mathrm{Groth16\text{-}Sound}}(\lambda)$$
 
-where $\text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda) \leq \text{negl}(\lambda)$ (under the discrete logarithm assumption for the BN254 curve).
+where $\mathrm{Adv}_{\mathcal{B}}^{\mathrm{Groth16\text{-}Sound}}(\lambda) \leq \mathrm{negl}(\lambda)$ (under the discrete logarithm assumption for the BN254 curve).
 
 **Step 2: Constructing Reduction Algorithm**
 
 Assume a PPT attacker $\mathcal{A}$ exists that breaks SYB's soundness. We construct an algorithm $\mathcal{B}$ that uses $\mathcal{A}$ to break Groth16's soundness.
 
-**Algorithm $\mathcal{B}^{\mathcal{A}}(\text{crs})$:** (Receives crs from Groth16 challenger)
+**Algorithm $\mathcal{B}^{\mathcal{A}}(\mathrm{crs})$:** (Receives crs from Groth16 challenger)
 
 1. **Setup Simulation:**
-   - Construct SYB's public parameters $\text{pp}$:
+   - Construct SYB's public parameters $\mathrm{pp}$:
      - Poseidon hash parameters
-     - Groth16 verification key $\text{vk} \subset \text{crs}$
+     - Groth16 verification key $\text{vk} \subset \mathrm{crs}$
      - Merkle tree depth $\text{nLevels} = 24$
-   - Send $\text{pp}$ to $\mathcal{A}$
+   - Send $\mathrm{pp}$ to $\mathcal{A}$
 
 2. **Execute Attacker:**
-   - $(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \leftarrow \mathcal{A}(\text{pp})$
+   - $(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \leftarrow \mathcal{A}(\mathrm{pp})$
 
 3. **Verification:**
-   - If $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 0$: **Abort** (attack failed)
+   - If $\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 0$: **Abort** (attack failed)
 
 4. **Check Invalid State Transition:**
    - For all possible batches $B'$ (with hash matching $B_{\mathit{hash}}$):
-     - $(\mathcal{T}', w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B')$
+     - $(\mathcal{T}', w) \leftarrow \mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B')$
      - If $\mathcal{T}' = \mathcal{T}_{\mathit{new}}$: **Abort** (state transition is correct, not an attack)
 
 5. **Construct Groth16 Attack:**
-   - Circuit $C_{\text{SYB}}$ public input: $x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$
+   - Circuit $C_{\mathrm{SYB}}$ public input: $x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$
    - Groth16 proof: $\pi$
    - Return $(x, \pi)$
 
@@ -1322,32 +1322,32 @@ Assume a PPT attacker $\mathcal{A}$ exists that breaks SYB's soundness. We const
 
 Analyze when $\mathcal{A}$ succeeds. For $\mathcal{A}$ to win in Soundness-Game:
 
-(a) $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 1$ (verification passes)
+(a) $\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 1$ (verification passes)
 
-(b) For all valid batches $B'$ (with $H(B') = B_{\mathit{hash}}$), $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B') \neq \mathcal{T}_{\mathit{new}}$ (invalid state)
+(b) For all valid batches $B'$ (with $H(B') = B_{\mathit{hash}}$), $\mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B') \neq \mathcal{T}_{\mathit{new}}$ (invalid state)
 
 Condition (a) means:
-$$G.\text{Verify}(\text{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$$
+$$G.\mathrm{Verify}(\mathrm{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$$
 
-By condition (b) and the definition of circuit $C_{\text{SYB}}$:
-- $C_{\text{SYB}}$ verifies: given $(\mathcal{T}_{\mathit{old}}, B, \mathit{merkle\_proofs})$, whether $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B)$ correctly generates $\mathcal{T}_{\mathit{new}}$
+By condition (b) and the definition of circuit $C_{\mathrm{SYB}}$:
+- $C_{\mathrm{SYB}}$ verifies: given $(\mathcal{T}_{\mathit{old}}, B, \mathit{merkle\_proofs})$, whether $\mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B)$ correctly generates $\mathcal{T}_{\mathit{new}}$
 - If condition (b) holds, then for public input $x$, there is **no witness $w$** that satisfies the circuit
-- That is, $\nexists w : C_{\text{SYB}}(x, w) = 1$
+- That is, $\nexists w : C_{\mathrm{SYB}}(x, w) = 1$
 
 Therefore, if $\mathcal{A}$ succeeds, $\mathcal{B}$ breaks Groth16 soundness:
 
 $$\Pr[\text{Soundness-Game}_{\mathcal{A}}^\Pi(\lambda) = 1] = \Pr\left[\begin{array}{l}
-G.\text{Verify}(\text{crs}, x, \pi) = 1 \\
-\land \nexists w : C_{\text{SYB}}(x, w) = 1
+G.\mathrm{Verify}(\mathrm{crs}, x, \pi) = 1 \\
+\land \nexists w : C_{\mathrm{SYB}}(x, w) = 1
 \end{array}\right]$$
 
-$$= \text{Adv}_{\mathcal{B}^{\mathcal{A}}}^{\text{Groth16-Sound}}(\lambda) \leq \text{negl}(\lambda)$$
+$$= \mathrm{Adv}_{\mathcal{B}^{\mathcal{A}}}^{\mathrm{Groth16\text{-}Sound}}(\lambda) \leq \mathrm{negl}(\lambda)$$
 
 **Step 4: Concrete Security Bound**
 
 Groth16's soundness is based on the hardness of the discrete logarithm problem on the BN254 curve. The concrete bound is:
 
-$$\text{Adv}_{\mathcal{B}}^{\text{Groth16-Sound}}(\lambda) \leq \frac{q_V \cdot (d+1)}{|G_1|}$$
+$$\mathrm{Adv}_{\mathcal{B}}^{\mathrm{Groth16\text{-}Sound}}(\lambda) \leq \frac{q_V \cdot (d+1)}{|G_1|}$$
 
 where:
 - $q_V$: Number of verification queries (here 1)
@@ -1355,7 +1355,7 @@ where:
 - $|G_1|$: Number of points on BN254 curve ($\approx 2^{254}$)
 
 Therefore:
-$$\text{Adv}_{\mathcal{A}}^{\text{SYB-Sound}}(\lambda) \leq \frac{2^{20} + 1}{2^{254}} \approx 2^{-234}$$
+$$\mathrm{Adv}_{\mathcal{A}}^{\text{SYB-Sound}}(\lambda) \leq \frac{2^{20} + 1}{2^{254}} \approx 2^{-234}$$
 
 This is a negligible probability. ∎
 
@@ -1366,10 +1366,10 @@ This is a negligible probability. ∎
 **Theorem 7.2 (Completeness - Restated)**: For SYB's ZK-Rollup system $\Pi$, for all valid state transitions:
 
 $$\Pr\left[\begin{array}{l}
-\text{pp} \leftarrow \text{Setup}(1^\lambda) \\
-(\mathcal{T}_{\mathit{new}}, w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \\
-\pi \leftarrow \text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \\
-\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 0
+\mathrm{pp} \leftarrow \mathrm{Setup}(1^\lambda) \\
+(\mathcal{T}_{\mathit{new}}, w) \leftarrow \mathrm{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \\
+\pi \leftarrow \mathrm{Prove}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \\
+\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 0
 \end{array}\right] = 0$$
 
 That is, an honest prover can always generate an accepted proof.
@@ -1389,7 +1389,7 @@ A state transition $(\mathcal{T}_{\mathit{old}}, B) \rightarrow \mathcal{T}_{\ma
 
 **Step 2: Correspondence with Circuit Constraints**
 
-SYB circuit $C_{\text{SYB}}$ includes the following constraints:
+SYB circuit $C_{\mathrm{SYB}}$ includes the following constraints:
 
 **Constraint 1: Signature Verification**
 ```circom
@@ -1427,7 +1427,7 @@ for (var t = 0; t < 3; t++) {
 
 **Step 3: Witness Construction**
 
-For a valid state transition, $\text{StateTransition}$ constructs witness $w$:
+For a valid state transition, $\mathrm{StateTransition}$ constructs witness $w$:
 
 $$w = (\{\mathit{merkle\_proofs}_i\}_{i=1}^n, \{\mathit{old\_states}_i\}_{i=1}^n, \{\mathit{signatures}_i\}_{i=1}^n)$$
 
@@ -1459,14 +1459,14 @@ By the definition of valid state transition:
 **Step 5: Applying Groth16 Completeness**
 
 Since all constraints are satisfied:
-$$C_{\text{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B))$$
+$$C_{\mathrm{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B))$$
 
 By Groth16's Completeness property:
 - If $(x, w)$ exists that satisfies the circuit
-- $\text{Prove}$ always generates an accepted proof $\pi$
+- $\mathrm{Prove}$ always generates an accepted proof $\pi$
 
 Therefore:
-$$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 1] = 1$$
+$$\Pr[\mathrm{Verify}(\mathrm{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 1] = 1$$
 
 That is, the rejection probability is 0. ∎
 
@@ -1478,7 +1478,7 @@ That is, the rejection probability is 0. ∎
 
 For all scoring functions $s: V \rightarrow \mathbb{R}^+$ and thresholds $\theta$, there exists an attacker strategy satisfying:
 
-$$\exists \text{ attacker } \mathcal{A} : \Pr\left[\frac{1}{k}\sum_{i=1}^k s(A_i) \geq \theta \mid \mathcal{A} \text{ created } \{A_1, ..., A_k\}\right] \geq 1 - \text{negl}(k, m)$$
+$$\exists \text{ attacker } \mathcal{A} : \Pr\left[\frac{1}{k}\sum_{i=1}^k s(A_i) \geq \theta \mid \mathcal{A} \text{ created } \{A_1, ..., A_k\}\right] \geq 1 - \mathrm{negl}(k, m)$$
 
 where $k$ is the number of addresses created and $m$ is the number of vouches obtained from honest users.
 
@@ -1578,7 +1578,7 @@ If threshold $\theta \leq \bar{s}_{\text{honest}}$:
 
 $$\Pr[\mathcal{A}_{\text{sophisticated}} \text{ wins}] \geq (1 - \epsilon_\phi) \cdot (1 - \epsilon_m) \cdot 1$$
 
-$$\geq 1 - \epsilon_\phi - \epsilon_m \geq 1 - \text{negl}(k, m)$$
+$$\geq 1 - \epsilon_\phi - \epsilon_m \geq 1 - \mathrm{negl}(k, m)$$
 
 Therefore, the attacker succeeds almost certainly. ∎
 
@@ -1592,7 +1592,7 @@ $$\forall \text{ attacker } \mathcal{A} : \Pr[\mathcal{A} \text{ wins}] \leq \ep
 
 However, Theorem 3.1 showed that $\mathcal{A}_{\text{sophisticated}}$ exists satisfying:
 
-$$\Pr[\mathcal{A}_{\text{sophisticated}} \text{ wins}] \geq 1 - \text{negl}(k, m) > 1/2$$
+$$\Pr[\mathcal{A}_{\text{sophisticated}} \text{ wins}] \geq 1 - \mathrm{negl}(k, m) > 1/2$$
 
 (for sufficiently large $k, m$)
 
@@ -1610,7 +1610,7 @@ $$\sum_{v \in S} s_{\text{set}}(v) \leq m$$
 
 **Formal Statement of Theorem 5.4**:
 
-For all PPT algorithms $\mathcal{A}$, the success probability in the following game is $1/2 + \text{negl}(n)$:
+For all PPT algorithms $\mathcal{A}$, the success probability in the following game is $1/2 + \mathrm{negl}(n)$:
 
 **Game Identify-Sybils$_{\mathcal{A}}(n)$:**
 ```

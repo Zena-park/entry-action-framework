@@ -1,6 +1,6 @@
 # Vouching Networks: Design and Implementation as General-Purpose Social Graph Infrastructure
 
-**Anonymous Authors**
+**Zena**
 
 ---
 

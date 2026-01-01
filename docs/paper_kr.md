@@ -148,8 +148,8 @@ SybilGuard (2006) 이후 15년간, 학계는 "더 정교한 그래프 분석 알
 우리는 **복잡도 이론**과 **실측 데이터**를 결합하여 확장성을 수학적으로 증명한다:
 
 **확장성 함수 도출**:
-- **순수 온체인**: $C_{\text{onchain}}(n) = \alpha \cdot n^2$ where $\alpha \approx 100,000$ gas (실측값으로부터 도출)
-- **ZK-Rollup**: $C_{\text{rollup}}(n) = \beta + \gamma \cdot n$ where $\beta = 287,000$ gas (증명 검증, 실측), $\gamma \approx 2,500$ gas (큐잉, 실측)
+- **순수 온체인**: $C_{\mathrm{onchain}}(n) = \alpha \cdot n^2$ where $\alpha \approx 100,000$ gas (실측값으로부터 도출)
+- **ZK-Rollup**: $C_{\mathrm{rollup}}(n) = \beta + \gamma \cdot n$ where $\beta = 287,000$ gas (증명 검증, 실측), $\gamma \approx 2,500$ gas (큐잉, 실측)
 
 **크로스오버 분석** (그림 8.1):
 - 크로스오버 지점: $n^* \approx 50$ 트랜잭션 (두 함수의 교차점)
@@ -426,14 +426,14 @@ $$\phi(v) = 1 \iff \exists \text{ 증명 } \pi : \mathrm{Verify}(\pi, v, \text{�
 ### 5.1 차수 기반 스코어링
 
 **정의 5.1**:
-$$s_{\text{deg}}(v) = |N^-(v)| = |\{u : (u,v) \in E\}|$$
+$$s_{\mathrm{deg}}(v) = |N^-(v)| = |\{u : (u,v) \in E\}|$$
 
 **속성**:
 - 계산이 간단함: 보증당 $O(1)$
 - 가스 효율적: 단일 스토리지 업데이트
 - 쉽게 게임 가능
 
-**정리 5.1 (차수 공격)**: *$k$개의 시빌을 생성하는 공격자는 $\sum_i s_{\text{deg}}(A_i) = k \cdot (k-1) + m$을 달성할 수 있다. 여기서 $m$은 공격 엣지이다.*
+**정리 5.1 (차수 공격)**: *$k$개의 시빌을 생성하는 공격자는 $\sum_i s_{\mathrm{deg}}(A_i) = k \cdot (k-1) + m$을 달성할 수 있다. 여기서 $m$은 공격 엣지이다.*
 
 ### 5.2 이웃 기반 스코어링
 
@@ -452,7 +452,7 @@ $$w(r) = \begin{cases}
 \end{cases}$$
 
 **정의 5.4 (이웃 기반 점수)**:
-$$s_{\text{nbr}}(v) = \sum_{u \in N^-(v)} w(r(u)) + \beta \cdot \min(\gamma, |N^+(v)|)$$
+$$s_{\mathrm{nbr}}(v) = \sum_{u \in N^-(v)} w(r(u)) + \beta \cdot \min(\gamma, |N^+(v)|)$$
 
 여기서 $\beta$ = 외부 엣지당 보너스, $\gamma$ = 보너스 한도.
 
@@ -791,8 +791,8 @@ NodeHasher는 노드의 이웃 데이터를 해싱한다:
    - 1000 트랜잭션에서는 ZK-Rollup만이 유일한 실용적 옵션
 
 5. **확장성 함수**:
-   - **순수 온체인**: $C_{\text{onchain}}(n) \approx 100,000 \cdot n^2$ gas
-   - **ZK-Rollup**: $C_{\text{rollup}}(n) \approx 287,000 + 2,500 \cdot n$ gas
+   - **순수 온체인**: $C_{\mathrm{onchain}}(n) \approx 100,000 \cdot n^2$ gas
+   - **ZK-Rollup**: $C_{\mathrm{rollup}}(n) \approx 287,000 + 2,500 \cdot n$ gas
    - **크로스오버 지점**: $n^* \approx 50$ (두 곡선의 교차점)
 
 6. **실제 비용 예시** (ETH = $2,000, gas price = 20 gwei):
@@ -1527,7 +1527,7 @@ $$\forall \text{ 그래프 기반 스코어링 함수 } s : \sum_{v \in V_C} s(v
 
 **증명**: 그래프 기반 스코어링 함수는 정의상 노드의 신원이 아니라 그래프 구조에만 의존한다. 동형 사상 $f: V_C \rightarrow V_A$에 대해:
 
-$$s(v) = h(\text{deg}(v), \{\text{deg}(u) : u \in N(v)\}, ...)$$
+$$s(v) = h(\mathrm{deg}(v), \{\mathrm{deg}(u) : u \in N(v)\}, ...)$$
 
 형태로 정의된다 (여기서 $h$는 구조적 속성의 함수). 그래프 동형성은 이러한 구조적 속성을 보존하므로:
 

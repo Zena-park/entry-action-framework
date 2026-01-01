@@ -245,13 +245,13 @@ The difference between this work and these is clear. Previous studies assume lin
 
 #### 2.3.1 Development of Zero-Knowledge Proofs
 
-Zero-Knowledge Proof is a concept introduced by Goldwasser, Micali, and Rackoff[22] in 1985, allowing a prover to prove the truth of a statement without revealing additional information about the statement. Early theoretical constructions were impractical, but practical zero-knowledge proof systems emerged in the 2010s.
+Zero-Knowledge Proof is a concept introduced by Goldwasser, Micali, and Rackoff[18] in 1985, allowing a prover to prove the truth of a statement without revealing additional information about the statement. Early theoretical constructions were impractical, but practical zero-knowledge proof systems emerged in the 2010s.
 
-**zk-SNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge)** are concise and non-interactive zero-knowledge proofs with very fast verification. Groth16[23] provides an efficient construction with constant proof size (~200 bytes) and millisecond-level verification time. However, it requires trusted setup, which causes centralization issues. Zcash[17] attempted to mitigate this through multi-party computation (MPC) ceremonies.
+**zk-SNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge)** are concise and non-interactive zero-knowledge proofs with very fast verification. Groth16[22] provides an efficient construction with constant proof size (~200 bytes) and millisecond-level verification time. However, it requires trusted setup, which causes centralization issues. Zcash[17] attempted to mitigate this through multi-party computation (MPC) ceremonies.
 
-**zk-STARKs (Zero-Knowledge Scalable Transparent Arguments of Knowledge)[24]** provide transparency without trusted setup. Both proof generation and verification are fast, and they are safe against quantum computers. However, proof size is larger than zk-SNARKs (hundreds of KB). StarkWare has built scalability solutions using this.
+**zk-STARKs (Zero-Knowledge Scalable Transparent Arguments of Knowledge)[20]** provide transparency without trusted setup. Both proof generation and verification are fast, and they are safe against quantum computers. However, proof size is larger than zk-SNARKs (hundreds of KB). StarkWare has built scalability solutions using this.
 
-**Bulletproofs[25]** provide short proofs without trusted setup. Monero uses this for confidential transactions. However, verification time increases linearly with proof size, making it unsuitable for large-scale batch verification.
+**Bulletproofs[23]** provide short proofs without trusted setup. Monero uses this for confidential transactions. However, verification time increases linearly with proof size, making it unsuitable for large-scale batch verification.
 
 #### 2.3.2 Zero-Knowledge Proofs for Blockchain Scalability
 
@@ -259,9 +259,9 @@ Blockchains have limited scalability because all nodes must verify all transacti
 
 **ZK-Rollups[20, 21]** batch process transactions off-chain and verify their correctness on-chain with zero-knowledge proofs. zkSync, Starknet, and Polygon zkEVM are representative examples. Key advantages are: (1) dramatically reduced gas costs by verifying hundreds or thousands of transactions with a single proof; (2) cryptographic guarantee of proof correctness, eliminating the need to wait for fraud proofs; (3) inheritance of Ethereum L1 security.
 
-**Validium[26]** is similar to ZK-Rollup but stores data off-chain. This provides higher scalability but requires data availability assumptions. Immutable X uses this for NFT transactions.
+**Validium[24]** is similar to ZK-Rollup but stores data off-chain. This provides higher scalability but requires data availability assumptions. Immutable X uses this for NFT transactions.
 
-**Volition[27]** allows users to choose whether to store data on-chain or off-chain per transaction. Important transactions are stored on-chain, and less important transactions are stored off-chain to balance cost and security.
+**Volition[25]** allows users to choose whether to store data on-chain or off-chain per transaction. Important transactions are stored on-chain, and less important transactions are stored off-chain to balance cost and security.
 
 #### 2.3.3 Use of Zero-Knowledge Proofs in This Work
 
@@ -283,11 +283,11 @@ Existing social platforms like Twitter, Facebook, and LinkedIn have fundamental 
 
 #### 2.4.2 Decentralized Social Protocols
 
-**Lens Protocol[28]** is a decentralized social graph built on Polygon, expressing profiles as NFTs and storing follow relationships on-chain. Users own their social graphs, and various applications can utilize them. However, all interactions require on-chain transactions, degrading user experience and incurring costs.
+**Lens Protocol[26]** is a decentralized social graph built on Polygon, expressing profiles as NFTs and storing follow relationships on-chain. Users own their social graphs, and various applications can utilize them. However, all interactions require on-chain transactions, degrading user experience and incurring costs.
 
-**Farcaster[29]** uses a hybrid approach. Identity is stored on-chain (Ethereum), while content and social graphs are stored off-chain (Farcaster Hubs). This balances scalability and decentralization, but requires trust assumptions about off-chain infrastructure.
+**Farcaster[27]** uses a hybrid approach. Identity is stored on-chain (Ethereum), while content and social graphs are stored off-chain (Farcaster Hubs). This balances scalability and decentralization, but requires trust assumptions about off-chain infrastructure.
 
-**ActivityPub[30]** and Mastodon use a federated model. Each instance operates autonomously and communicates through standard protocols. However, instance administrators still have significant authority, and cross-instance search and discovery are difficult.
+**ActivityPub[28]** and Mastodon use a federated model. Each instance operates autonomously and communicates through standard protocols. However, instance administrators still have significant authority, and cross-instance search and discovery are difficult.
 
 This work's vouching network has a complementary relationship with these. We provide general-purpose social graph infrastructure, and protocols like Lens or Farcaster can utilize it to implement trust scores, recommendations, governance, etc. The key difference is that we treat entry conditions as first-class design elements, allowing each application to define groups appropriate to their context.
 
@@ -507,7 +507,7 @@ The role of each tree is as follows:
   - Stores trust scores for each user
   - Scores are calculated from the vouching graph structure
 
-Here, $H$ is the Poseidon hash function[22], a hash function designed to be efficiently computable in zero-knowledge proof circuits. Poseidon can reduce the number of circuit constraints by over 90% compared to SHA-256 or Keccak.
+Here, $H$ is the Poseidon hash function[19], a hash function designed to be efficiently computable in zero-knowledge proof circuits. Poseidon can reduce the number of circuit constraints by over 90% compared to SHA-256 or Keccak.
 
 Sparse Merkle Trees represent the entire address space while storing only actually used entries, optimizing both space efficiency and proof size. The tree depth is set to 24 levels, supporting up to $2^{24} \approx 167,000$ accounts.
 
@@ -620,7 +620,7 @@ NodeHasher hashes a node's neighbor data:
 
 **Theorem 7.1 (Soundness)**: *If a verifier accepts a proof $\pi$ for transition $(\mathcal{T}_{\text{old}}, B) \rightarrow \mathcal{T}_{\text{new}}$, then except with negligible probability, the transition is valid.*
 
-**Proof**: Follows from the soundness of the Groth16 proof system[23] and correct circuit construction. An attacker attempting to generate a proof for an invalid state transition must solve the elliptic curve discrete logarithm problem, which is computationally infeasible. ∎
+**Proof**: Follows from the soundness of the Groth16 proof system[22] and correct circuit construction. An attacker attempting to generate a proof for an invalid state transition must solve the elliptic curve discrete logarithm problem, which is computationally infeasible. ∎
 
 **Theorem 7.2 (Completeness)**: *For all valid transitions, an honest prover can generate an accepted proof.*
 
@@ -628,7 +628,7 @@ NodeHasher hashes a node's neighbor data:
 
 ### 7.3 Implementation Details
 
-**Proof System**: Groth16[23]
+**Proof System**: Groth16[22]
 - Proof size: Fixed 192 bytes (3 elliptic curve points)
 - Verification time: Milliseconds (3 pairing operations)
 - Disadvantage: Requires trusted setup
@@ -638,7 +638,7 @@ NodeHasher hashes a node's neighbor data:
   - Efficient on-chain verification with Ethereum precompile support
 - **Hash Function**: Poseidon
   - ZK-friendly design minimizes constraint count
-- **Circuit Language**: Circom 2.0[24]
+- **Circuit Language**: Circom 2.0[21]
   - Declarative syntax facilitates circuit writing
 
 **Constraint Count**:
@@ -1277,7 +1277,7 @@ We reduce SYB's soundness to the soundness of the Groth16 proof system.
 
 **Step 1: Groth16 Soundness Assumption**
 
-The soundness of Groth16[23] is defined as:
+The soundness of Groth16[22] is defined as:
 
 **Assumption A.1 (Groth16 Soundness)**: For the Groth16 proof system $\text{Groth16} = (G.\text{Setup}, G.\text{Prove}, G.\text{Verify})$, for all PPT attackers $\mathcal{B}$:
 
@@ -2070,5 +2070,65 @@ This game-theoretic analysis establishes:
 4. **Mechanism Design**: Entry condition design is mechanism design
 
 These formal results support the Entry Action Framework's emphasis on entry conditions over scoring algorithms.
+
+---
+
+## References
+
+[1] J. R. Douceur, "The Sybil Attack," *Proceedings of the 1st International Workshop on Peer-to-Peer Systems (IPTPS)*, 2002.
+
+[2] S. Nakamoto, "Bitcoin: A Peer-to-Peer Electronic Cash System," 2008.
+
+[3] Ethereum Foundation, "Ethereum 2.0 Specifications," https://github.com/ethereum/consensus-specs
+
+[4] B. Borgers et al., "Proof-of-Personhood: Redemocratizing Permissionless Cryptocurrencies," *IEEE S&P Workshops*, 2021.
+
+[5] H. Yu, M. Kaminsky, P. B. Gibbons, and A. Flaxman, "SybilGuard: Defending Against Sybil Attacks via Social Networks," *SIGCOMM 2006*.
+
+[6] H. Yu, P. B. Gibbons, M. Kaminsky, and F. Xiao, "SybilLimit: A Near-Optimal Social Network Defense against Sybil Attacks," *IEEE/ACM Transactions on Networking*, 2010.
+
+[7] Q. Cao, M. Sirivianos, X. Yang, and T. Pregueiro, "SybilRank: Aiding the Detection of Fake Accounts in Large Scale Social Online Services," *IEEE/ACM Transactions on Networking*, 2014.
+
+[8] G. Danezis and P. Mittal, "SybilInfer: Detecting Sybil Nodes using Social Networks," *NDSS*, 2009.
+
+[9] World ID, "Proof of Personhood via Iris Biometrics," https://worldcoin.org/
+
+[10] BrightID, "A Social Identity Network," https://www.brightid.org/
+
+[11] Proof of Humanity, "A Sybil-Resistant Registry of Humans," https://www.proofofhumanity.id/
+
+[12] Gitcoin Grants, "Quadratic Funding for Public Goods," https://gitcoin.co/grants
+
+[13] S. Seuken and D. C. Parkes, "On the Sybil-Proofness of Accounting Mechanisms," *Workshop on Internet and Network Economics (WINE)*, 2009.
+
+[14] S. Brin and L. Page, "The Anatomy of a Large-Scale Hypertextual Web Search Engine," *Computer Networks*, 1998.
+
+[15] S. D. Kamvar, M. T. Schlosser, and H. Garcia-Molina, "The EigenTrust Algorithm for Reputation Management in P2P Networks," *WWW 2003*.
+
+[16] R. Levien, "Attack-Resistant Trust Metrics," *Computing with Social Trust*, 2009.
+
+[17] E. Ben-Sasson et al., "Zerocash: Decentralized Anonymous Payments from Bitcoin," *IEEE S&P 2014*.
+
+[18] S. Goldwasser, S. Micali, and C. Rackoff, "The Knowledge Complexity of Interactive Proof Systems," *SIAM Journal on Computing*, 1989.
+
+[19] L. Grassi et al., "Poseidon: A New Hash Function for Zero-Knowledge Proof Systems," *USENIX Security*, 2021.
+
+[20] E. Ben-Sasson et al., "Scalable, Transparent, and Post-Quantum Secure Computational Integrity," *IACR Cryptology ePrint Archive*, 2018.
+
+[21] Circom, "Circuit Compiler for Zero-Knowledge Proofs," https://docs.circom.io/
+
+[22] J. Groth, "On the Size of Pairing-Based Non-interactive Arguments," *EUROCRYPT 2016*.
+
+[23] B. Bünz et al., "Bulletproofs: Short Proofs for Confidential Transactions and More," *IEEE S&P 2018*.
+
+[24] StarkWare, "Validium: Scalable Off-Chain Data Availability," https://starkware.co/validium/
+
+[25] StarkWare, "Volition: Hybrid Data Availability," https://medium.com/starkware/volition-and-the-emerging-data-availability-spectrum-87e8bfa09bb
+
+[26] Lens Protocol, "A Composable and Decentralized Social Graph," https://docs.lens.xyz/
+
+[27] Farcaster, "A Protocol for Decentralized Social Networks," https://github.com/farcasterxyz/protocol
+
+[28] W3C, "ActivityPub Specification," https://www.w3.org/TR/activitypub/
 
 ---

@@ -550,7 +550,7 @@ $$B = (\text{tx}_1, ..., \text{tx}_n)$$
 Batch processing is SYB's core efficiency mechanism. Instead of processing individual transactions one by one, the sequencer collects multiple transactions and processes them as a batch.
 
 **State Transition**:
-$$(\mathcal{T}_{\text{old}}, B) \xrightarrow{\text{Process}} (\mathcal{T}_{\text{new}}, \pi)$$
+$$(\mathcal{T}_{\mathit{old}}, B) \xrightarrow{\text{Process}} (\mathcal{T}_{\mathit{new}}, \pi)$$
 
 where $\pi$ is a zero-knowledge proof proving:
 - Each transaction executed correctly
@@ -559,9 +559,9 @@ where $\pi$ is a zero-knowledge proof proving:
 - New Merkle root calculated correctly
 
 **On-chain Verification**:
-$$\text{Verify}(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) \rightarrow \{0, 1\}$$
+$$\text{Verify}(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \rightarrow \{0, 1\}$$
 
-The smart contract verifies proof $\pi$ and, if it passes, accepts the new state root $\mathcal{T}_{\text{new}}$. This verification is performed in constant time regardless of batch size, so larger batches result in lower gas costs per transaction.
+The smart contract verifies proof $\pi$ and, if it passes, accepts the new state root $\mathcal{T}_{\mathit{new}}$. This verification is performed in constant time regardless of batch size, so larger batches result in lower gas costs per transaction.
 
 **Implementation Status**:
 - ✅ Sybil.sol: Batch processing smart contract implementation complete
@@ -618,7 +618,7 @@ NodeHasher hashes a node's neighbor data:
 
 ### 7.2 Security Properties
 
-**Theorem 7.1 (Soundness)**: *If a verifier accepts a proof $\pi$ for transition $(\mathcal{T}_{\text{old}}, B) \rightarrow \mathcal{T}_{\text{new}}$, then except with negligible probability, the transition is valid.*
+**Theorem 7.1 (Soundness)**: *If a verifier accepts a proof $\pi$ for transition $(\mathcal{T}_{\mathit{old}}, B) \rightarrow \mathcal{T}_{\mathit{new}}$, then except with negligible probability, the transition is valid.*
 
 **Proof**: Follows from the soundness of the Groth16 proof system[22] and correct circuit construction. An attacker attempting to generate a proof for an invalid state transition must solve the elliptic curve discrete logarithm problem, which is computationally infeasible. ∎
 
@@ -1235,7 +1235,7 @@ This appendix provides fully formalized proofs for the main theorems in the body
 - $a \stackrel{R}{\leftarrow} S$: Uniformly random selection of $a$ from set $S$
 - $[n]$: Set $\{1, 2, ..., n\}$
 
-**Definition A.1 (Computational Indistinguishability)**: Two probability distributions $X = \{X_\lambda\}_{\lambda \in \mathbb{N}}$ and $Y = \{Y_\lambda\}_{\lambda \in \mathbb{N}}$ are computationally indistinguishable ($X \approx_c Y$) if for all PPT distinguishers $D$:
+**Definition A.1 (Computational Indistinguishability)**: Two probability distributions $X = (X_\lambda)_{\lambda \in \mathbb{N}}$ and $Y = (Y_\lambda)_{\lambda \in \mathbb{N}}$ are computationally indistinguishable ($X \approx_c Y$) if for all PPT distinguishers $D$:
 
 $$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \right| \leq \text{negl}(\lambda)$$
 
@@ -1246,9 +1246,9 @@ $$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \ri
 $$\Pi = (\text{Setup}, \text{Prove}, \text{Verify}, \text{StateTransition})$$
 
 - $\text{Setup}(1^\lambda) \rightarrow \text{pp}$: Generate public parameters
-- $\text{StateTransition}(\mathcal{T}_{\text{old}}, B) \rightarrow (\mathcal{T}_{\text{new}}, w)$: State transition and witness generation
-- $\text{Prove}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B, w) \rightarrow \pi$: Proof generation
-- $\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B), \pi) \rightarrow \{0, 1\}$: Proof verification
+- $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \rightarrow (\mathcal{T}_{\mathit{new}}, w)$: State transition and witness generation
+- $\text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \rightarrow \pi$: Proof generation
+- $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) \rightarrow (0, 1)$: Proof verification
 
 where $\mathcal{T}$ is a Sparse Merkle Tree root, $B$ is a transaction batch, $w$ is a witness (Merkle proofs, etc.), and $H$ is a hash function.
 
@@ -1303,18 +1303,18 @@ Assume a PPT attacker $\mathcal{A}$ exists that breaks SYB's soundness. We const
    - Send $\text{pp}$ to $\mathcal{A}$
 
 2. **Execute Attacker:**
-   - $(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) \leftarrow \mathcal{A}(\text{pp})$
+   - $(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \leftarrow \mathcal{A}(\text{pp})$
 
 3. **Verification:**
-   - If $\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) = 0$: **Abort** (attack failed)
+   - If $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 0$: **Abort** (attack failed)
 
 4. **Check Invalid State Transition:**
-   - For all possible batches $B'$ (with hash matching $B_{\text{hash}}$):
-     - $(\mathcal{T}', w) \leftarrow \text{StateTransition}(\mathcal{T}_{\text{old}}, B')$
-     - If $\mathcal{T}' = \mathcal{T}_{\text{new}}$: **Abort** (state transition is correct, not an attack)
+   - For all possible batches $B'$ (with hash matching $B_{\mathit{hash}}$):
+     - $(\mathcal{T}', w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B')$
+     - If $\mathcal{T}' = \mathcal{T}_{\mathit{new}}$: **Abort** (state transition is correct, not an attack)
 
 5. **Construct Groth16 Attack:**
-   - Circuit $C_{\text{SYB}}$ public input: $x = H(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}})$
+   - Circuit $C_{\text{SYB}}$ public input: $x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$
    - Groth16 proof: $\pi$
    - Return $(x, \pi)$
 
@@ -1322,15 +1322,15 @@ Assume a PPT attacker $\mathcal{A}$ exists that breaks SYB's soundness. We const
 
 Analyze when $\mathcal{A}$ succeeds. For $\mathcal{A}$ to win in Soundness-Game:
 
-(a) $\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) = 1$ (verification passes)
+(a) $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 1$ (verification passes)
 
-(b) For all valid batches $B'$ (with $H(B') = B_{\text{hash}}$), $\text{StateTransition}(\mathcal{T}_{\text{old}}, B') \neq \mathcal{T}_{\text{new}}$ (invalid state)
+(b) For all valid batches $B'$ (with $H(B') = B_{\mathit{hash}}$), $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B') \neq \mathcal{T}_{\mathit{new}}$ (invalid state)
 
 Condition (a) means:
-$$G.\text{Verify}(\text{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}})$$
+$$G.\text{Verify}(\text{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$$
 
 By condition (b) and the definition of circuit $C_{\text{SYB}}$:
-- $C_{\text{SYB}}$ verifies: given $(\mathcal{T}_{\text{old}}, B, \text{merkle\_proofs})$, whether $\text{StateTransition}(\mathcal{T}_{\text{old}}, B)$ correctly generates $\mathcal{T}_{\text{new}}$
+- $C_{\text{SYB}}$ verifies: given $(\mathcal{T}_{\mathit{old}}, B, \mathit{merkle\_proofs})$, whether $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B)$ correctly generates $\mathcal{T}_{\mathit{new}}$
 - If condition (b) holds, then for public input $x$, there is **no witness $w$** that satisfies the circuit
 - That is, $\nexists w : C_{\text{SYB}}(x, w) = 1$
 
@@ -1367,9 +1367,9 @@ This is a negligible probability. ∎
 
 $$\Pr\left[\begin{array}{l}
 \text{pp} \leftarrow \text{Setup}(1^\lambda) \\
-(\mathcal{T}_{\text{new}}, w) \leftarrow \text{StateTransition}(\mathcal{T}_{\text{old}}, B) \\
-\pi \leftarrow \text{Prove}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B, w) \\
-\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B), \pi) = 0
+(\mathcal{T}_{\mathit{new}}, w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \\
+\pi \leftarrow \text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \\
+\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 0
 \end{array}\right] = 0$$
 
 That is, an honest prover can always generate an accepted proof.
@@ -1378,7 +1378,7 @@ That is, an honest prover can always generate an accepted proof.
 
 **Step 1: Definition of Valid State Transition**
 
-A state transition $(\mathcal{T}_{\text{old}}, B) \rightarrow \mathcal{T}_{\text{new}}$ is valid if:
+A state transition $(\mathcal{T}_{\mathit{old}}, B) \rightarrow \mathcal{T}_{\mathit{new}}$ is valid if:
 
 1. All transactions in batch $B = (\text{tx}_1, ..., \text{tx}_n)$ are correctly signed
 2. Each transaction $\text{tx}_i$ complies with system rules:
@@ -1453,20 +1453,20 @@ By the definition of valid state transition:
 **(c) Merkle Root Constraint Satisfied:**
 - New Merkle root is calculated correctly (Definition 3)
 - Merkle proofs in witness provide correct Merkle path
-- SparseMerkleTreeUpdater circuit calculation results match $\mathcal{T}_{\text{new}}$
+- SparseMerkleTreeUpdater circuit calculation results match $\mathcal{T}_{\mathit{new}}$
 - Constraint 3 satisfied ✓
 
 **Step 5: Applying Groth16 Completeness**
 
 Since all constraints are satisfied:
-$$C_{\text{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B))$$
+$$C_{\text{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B))$$
 
 By Groth16's Completeness property:
 - If $(x, w)$ exists that satisfies the circuit
 - $\text{Prove}$ always generates an accepted proof $\pi$
 
 Therefore:
-$$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B), \pi) = 1] = 1$$
+$$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 1] = 1$$
 
 That is, the rejection probability is 0. ∎
 

@@ -556,7 +556,7 @@ $$B = (\text{tx}_1, ..., \text{tx}_n)$$
 배치 처리는 SYB의 핵심 효율성 메커니즘이다. 개별 트랜잭션을 하나씩 처리하는 대신, 시퀀서는 여러 트랜잭션을 수집하여 배치로 처리한다.
 
 **상태 전이**:
-$$(\mathcal{T}_{\text{old}}, B) \xrightarrow{\text{Process}} (\mathcal{T}_{\text{new}}, \pi)$$
+$$(\mathcal{T}_{\mathit{old}}, B) \xrightarrow{\text{Process}} (\mathcal{T}_{\mathit{new}}, \pi)$$
 
 여기서 $\pi$는 다음을 증명하는 영지식 증명이다:
 - 각 트랜잭션이 올바르게 실행됨
@@ -565,9 +565,9 @@ $$(\mathcal{T}_{\text{old}}, B) \xrightarrow{\text{Process}} (\mathcal{T}_{\text
 - 새로운 Merkle root가 정확하게 계산됨
 
 **온체인 검증**:
-$$\text{Verify}(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) \rightarrow \{0, 1\}$$
+$$\text{Verify}(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \rightarrow \{0, 1\}$$
 
-스마트 컨트랙트는 증명 $\pi$를 검증하고, 통과하면 새로운 상태 루트 $\mathcal{T}_{\text{new}}$를 수용한다. 이 검증은 배치 크기와 무관하게 상수 시간에 수행되므로, 배치가 클수록 트랜잭션당 가스 비용이 낮아진다.
+스마트 컨트랙트는 증명 $\pi$를 검증하고, 통과하면 새로운 상태 루트 $\mathcal{T}_{\mathit{new}}$를 수용한다. 이 검증은 배치 크기와 무관하게 상수 시간에 수행되므로, 배치가 클수록 트랜잭션당 가스 비용이 낮아진다.
 
 **실제 구현 상태**:
 - ✅ Sybil.sol: 배치 처리 스마트 컨트랙트 구현 완료
@@ -624,7 +624,7 @@ NodeHasher는 노드의 이웃 데이터를 해싱한다:
 
 ### 7.2 보안 속성
 
-**정리 7.1 (건전성, Soundness)**: *검증자가 전이 $(\mathcal{T}_{\text{old}}, B) \rightarrow \mathcal{T}_{\text{new}}$에 대한 증명 $\pi$를 수용한다면, 무시할 수 있는 확률을 제외하고 해당 전이는 유효하다.*
+**정리 7.1 (건전성, Soundness)**: *검증자가 전이 $(\mathcal{T}_{\mathit{old}}, B) \rightarrow \mathcal{T}_{\mathit{new}}$에 대한 증명 $\pi$를 수용한다면, 무시할 수 있는 확률을 제외하고 해당 전이는 유효하다.*
 
 **증명**: Groth16 증명 시스템의 건전성[22]과 회로의 올바른 구성으로부터 따라온다. 공격자가 잘못된 상태 전이에 대한 증명을 생성하려면 타원 곡선 이산 로그 문제를 풀어야 하며, 이는 계산적으로 불가능하다. ∎
 
@@ -1218,7 +1218,7 @@ UI: 매치 인터페이스, 호환성 점수
 - $a \stackrel{R}{\leftarrow} S$: 집합 $S$에서 균등하게 무작위로 $a$를 선택
 - $[n]$: 집합 $\{1, 2, ..., n\}$
 
-**정의 A.1 (계산적 구별 불가능성)**: 두 확률 분포 $X = \{X_\lambda\}_{\lambda \in \mathbb{N}}$와 $Y = \{Y_\lambda\}_{\lambda \in \mathbb{N}}$가 계산적으로 구별 불가능하다 ($X \approx_c Y$)는 것은, 모든 PPT 구별자 $D$에 대해
+**정의 A.1 (계산적 구별 불가능성)**: 두 확률 분포 $X = (X_\lambda)_{\lambda \in \mathbb{N}}$와 $Y = (Y_\lambda)_{\lambda \in \mathbb{N}}$가 계산적으로 구별 불가능하다 ($X \approx_c Y$)는 것은, 모든 PPT 구별자 $D$에 대해
 
 $$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \right| \leq \text{negl}(\lambda)$$
 
@@ -1231,9 +1231,9 @@ $$\left| \Pr[D(1^\lambda, X_\lambda) = 1] - \Pr[D(1^\lambda, Y_\lambda) = 1] \ri
 $$\Pi = (\text{Setup}, \text{Prove}, \text{Verify}, \text{StateTransition})$$
 
 - $\text{Setup}(1^\lambda) \rightarrow \text{pp}$: 공개 파라미터 생성
-- $\text{StateTransition}(\mathcal{T}_{\text{old}}, B) \rightarrow (\mathcal{T}_{\text{new}}, w)$: 상태 전이 및 witness 생성
-- $\text{Prove}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B, w) \rightarrow \pi$: 증명 생성
-- $\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B), \pi) \rightarrow \{0, 1\}$: 증명 검증
+- $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \rightarrow (\mathcal{T}_{\mathit{new}}, w)$: 상태 전이 및 witness 생성
+- $\text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \rightarrow \pi$: 증명 생성
+- $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) \rightarrow (0, 1)$: 증명 검증
 
 여기서 $\mathcal{T}$는 Sparse Merkle Tree 루트, $B$는 트랜잭션 배치, $w$는 witness (Merkle proofs 등), $H$는 해시 함수이다.
 
@@ -1288,18 +1288,18 @@ SYB의 건전성을 깨는 PPT 공격자 $\mathcal{A}$가 존재한다고 가정
    - $\text{pp}$를 $\mathcal{A}$에게 전달
 
 2. **공격자 실행:**
-   - $(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) \leftarrow \mathcal{A}(\text{pp})$
+   - $(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) \leftarrow \mathcal{A}(\text{pp})$
 
 3. **검증:**
-   - If $\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) = 0$: **Abort** (공격 실패)
+   - If $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 0$: **Abort** (공격 실패)
 
 4. **잘못된 상태 전이 확인:**
-   - 모든 가능한 배치 $B'$에 대해 (해시가 $B_{\text{hash}}$와 일치):
-     - $(\mathcal{T}', w) \leftarrow \text{StateTransition}(\mathcal{T}_{\text{old}}, B')$
-     - If $\mathcal{T}' = \mathcal{T}_{\text{new}}$: **Abort** (상태 전이가 올바름, 공격 아님)
+   - 모든 가능한 배치 $B'$에 대해 (해시가 $B_{\mathit{hash}}$와 일치):
+     - $(\mathcal{T}', w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B')$
+     - If $\mathcal{T}' = \mathcal{T}_{\mathit{new}}$: **Abort** (상태 전이가 올바름, 공격 아님)
 
 5. **Groth16 공격 구성:**
-   - 회로 $C_{\text{SYB}}$의 공개 입력: $x = H(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}})$
+   - 회로 $C_{\text{SYB}}$의 공개 입력: $x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$
    - Groth16 증명: $\pi$
    - Return $(x, \pi)$
 
@@ -1307,15 +1307,15 @@ SYB의 건전성을 깨는 PPT 공격자 $\mathcal{A}$가 존재한다고 가정
 
 $\mathcal{A}$가 성공하는 경우를 분석하자. $\mathcal{A}$가 Soundness-Game에서 이기려면:
 
-(a) $\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}}, \pi) = 1$ (검증 통과)
+(a) $\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}}, \pi) = 1$ (검증 통과)
 
-(b) 모든 유효한 배치 $B'$ (with $H(B') = B_{\text{hash}}$)에 대해, $\text{StateTransition}(\mathcal{T}_{\text{old}}, B') \neq \mathcal{T}_{\text{new}}$ (잘못된 상태)
+(b) 모든 유효한 배치 $B'$ (with $H(B') = B_{\mathit{hash}}$)에 대해, $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B') \neq \mathcal{T}_{\mathit{new}}$ (잘못된 상태)
 
 조건 (a)는 다음을 의미한다:
-$$G.\text{Verify}(\text{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B_{\text{hash}})$$
+$$G.\text{Verify}(\text{crs}, x, \pi) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B_{\mathit{hash}})$$
 
 조건 (b)와 회로 $C_{\text{SYB}}$의 정의에 의해:
-- $C_{\text{SYB}}$는 다음을 검증: 주어진 $(\mathcal{T}_{\text{old}}, B, \text{merkle\_proofs})$에 대해, $\text{StateTransition}(\mathcal{T}_{\text{old}}, B)$가 올바르게 $\mathcal{T}_{\text{new}}$를 생성하는지
+- $C_{\text{SYB}}$는 다음을 검증: 주어진 $(\mathcal{T}_{\mathit{old}}, B, \mathit{merkle\_proofs})$에 대해, $\text{StateTransition}(\mathcal{T}_{\mathit{old}}, B)$가 올바르게 $\mathcal{T}_{\mathit{new}}$를 생성하는지
 - 조건 (b)가 성립하면, 공개 입력 $x$에 대해 회로를 만족시키는 witness $w$가 **존재하지 않음**
 - 즉, $\nexists w : C_{\text{SYB}}(x, w) = 1$
 
@@ -1352,9 +1352,9 @@ $$\text{Adv}_{\mathcal{A}}^{\text{SYB-Sound}}(\lambda) \leq \frac{2^{20} + 1}{2^
 
 $$\Pr\left[\begin{array}{l}
 \text{pp} \leftarrow \text{Setup}(1^\lambda) \\
-(\mathcal{T}_{\text{new}}, w) \leftarrow \text{StateTransition}(\mathcal{T}_{\text{old}}, B) \\
-\pi \leftarrow \text{Prove}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, B, w) \\
-\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B), \pi) = 0
+(\mathcal{T}_{\mathit{new}}, w) \leftarrow \text{StateTransition}(\mathcal{T}_{\mathit{old}}, B) \\
+\pi \leftarrow \text{Prove}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, B, w) \\
+\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 0
 \end{array}\right] = 0$$
 
 즉, 정직한 증명자는 항상 수용되는 증명을 생성할 수 있다.
@@ -1363,7 +1363,7 @@ $$\Pr\left[\begin{array}{l}
 
 **Step 1: 유효한 상태 전이의 정의**
 
-상태 전이 $(\mathcal{T}_{\text{old}}, B) \rightarrow \mathcal{T}_{\text{new}}$가 유효하다는 것은:
+상태 전이 $(\mathcal{T}_{\mathit{old}}, B) \rightarrow \mathcal{T}_{\mathit{new}}$가 유효하다는 것은:
 
 1. 배치 $B = (\text{tx}_1, ..., \text{tx}_n)$의 모든 트랜잭션이 올바르게 서명됨
 2. 각 트랜잭션 $\text{tx}_i$가 시스템 규칙을 준수:
@@ -1438,20 +1438,20 @@ $$w = (\{\mathit{merkle\_proofs}_i\}_{i=1}^n, \{\mathit{old\_states}_i\}_{i=1}^n
 **(c) Merkle root 제약 만족:**
 - 새로운 Merkle root가 정확하게 계산됨 (정의 3)
 - Witness의 merkle_proofs는 올바른 Merkle path 제공
-- SparseMerkleTreeUpdater 회로의 계산 결과가 $\mathcal{T}_{\text{new}}$와 일치
+- SparseMerkleTreeUpdater 회로의 계산 결과가 $\mathcal{T}_{\mathit{new}}$와 일치
 - 제약 3 만족 ✓
 
 **Step 5: Groth16 완전성 적용**
 
 모든 제약 조건이 만족되므로:
-$$C_{\text{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B))$$
+$$C_{\text{SYB}}(x, w) = 1 \quad \text{where } x = H(\mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B))$$
 
 Groth16의 완전성(Completeness) 속성에 의해:
 - 회로를 만족시키는 $(x, w)$가 존재하면
 - $\text{Prove}$는 항상 수용되는 증명 $\pi$를 생성
 
 따라서:
-$$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\text{old}}, \mathcal{T}_{\text{new}}, H(B), \pi) = 1] = 1$$
+$$\Pr[\text{Verify}(\text{pp}, \mathcal{T}_{\mathit{old}}, \mathcal{T}_{\mathit{new}}, H(B), \pi) = 1] = 1$$
 
 즉, 거부 확률은 0이다. ∎
 

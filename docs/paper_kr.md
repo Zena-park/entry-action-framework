@@ -1215,7 +1215,7 @@ UI: 매치 인터페이스, 호환성 점수
 - $\lambda$: 보안 파라미터
 - $\text{negl}(\lambda)$: 무시할 수 있는 함수, 즉 모든 다항식 $p$에 대해 충분히 큰 $\lambda$에서 $\text{negl}(\lambda) < 1/p(\lambda)$
 - $\text{PPT}$: 확률적 다항 시간 (Probabilistic Polynomial Time)
-- $a \overset{\$}{\leftarrow} S$: 집합 $S$에서 균등하게 무작위로 $a$를 선택
+- $a \stackrel{R}{\leftarrow} S$: 집합 $S$에서 균등하게 무작위로 $a$를 선택
 - $[n]$: 집합 $\{1, 2, ..., n\}$
 
 **정의 A.1 (계산적 구별 불가능성)**: 두 확률 분포 $X = \{X_\lambda\}_{\lambda \in \mathbb{N}}$와 $Y = \{Y_\lambda\}_{\lambda \in \mathbb{N}}$가 계산적으로 구별 불가능하다 ($X \approx_c Y$)는 것은, 모든 PPT 구별자 $D$에 대해

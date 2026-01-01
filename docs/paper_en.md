@@ -1232,7 +1232,7 @@ This appendix provides fully formalized proofs for the main theorems in the body
 - $\lambda$: Security parameter
 - $\text{negl}(\lambda)$: Negligible function, i.e., for all polynomials $p$, for sufficiently large $\lambda$, $\text{negl}(\lambda) < 1/p(\lambda)$
 - $\text{PPT}$: Probabilistic Polynomial Time
-- $a \overset{\$}{\leftarrow} S$: Uniformly random selection of $a$ from set $S$
+- $a \stackrel{R}{\leftarrow} S$: Uniformly random selection of $a$ from set $S$
 - $[n]$: Set $\{1, 2, ..., n\}$
 
 **Definition A.1 (Computational Indistinguishability)**: Two probability distributions $X = \{X_\lambda\}_{\lambda \in \mathbb{N}}$ and $Y = \{Y_\lambda\}_{\lambda \in \mathbb{N}}$ are computationally indistinguishable ($X \approx_c Y$) if for all PPT distinguishers $D$:

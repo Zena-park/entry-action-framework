@@ -8,8 +8,8 @@ A new design paradigm for vouching networks.
 
 ## 📄 Papers
 
-- **[English Version](./docs/paper_en.md)** - Vouching Networks: Design and Implementation as General-Purpose Social Graph Infrastructure
-- **[Korean Version](./docs/paper_kr.md)** - 보증 네트워크: 범용 소셜 그래프 인프라로서의 설계와 구현
+- **[English Version](./docs/paper_en_v2.md)** - Vouching Networks: Design and Implementation as General-Purpose Social Graph Infrastructure
+- **[Korean Version](./docs/paper_kr_v2.md)** - 보증 네트워크: 범용 소셜 그래프 인프라로서의 설계와 구현
 
 ---
 

@@ -18,7 +18,7 @@
 
 **실용적 구현 - ZK-Rollup을 통한 1000배 확장성:** 우리는 SYB(Social Vouch System)에서 영지식 증명 기반 ZK-Rollup 아키텍처를 통해 보증 네트워크의 가장 큰 장벽인 가스 비용 문제를 해결한다. 복잡한 그래프 업데이트와 점수 계산을 오프체인에서 수행하고 그 정확성만을 온체인에서 검증함으로써, 순수 온체인 대비 **125~1000배의 비용 절감**을 달성한다 (100 트랜잭션 기준: 순수 온체인 $10M$ gas → ZK-Rollup $500K$ gas). Sparse Merkle Tree, Circom, Groth16, Poseidon 해시를 활용한 구현은 이더리움 메인넷(레이어2)에서 실용적으로 운영 가능함을 입증한다 (Sepolia 배포: 50명 사용자, 450+ vouches).
 
-**게임 이론적 기초:** 우리는 보증 네트워크를 인센티브 호환성(Incentive Compatibility), 내쉬 균형(Nash Equilibrium), 메커니즘 설계(Mechanism Design) 관점에서 분석하여, **진입 조건 설계 = 메커니즘 설계**임을 수학적으로 증명한다. 진입 조건의 시빌 저항력을 ROI로 정량화하며 (정리 B.9), 애플리케이션별 최적 진입 조건 선택 가이드라인을 제공한다 (Degree-based: ROI 900% vs Vouch-from-Trusted: ROI -75.6%).
+**게임 이론적 기초:** 우리는 보증 네트워크를 인센티브 호환성(Incentive Compatibility), 내쉬 균형(Nash Equilibrium), 메커니즘 설계(Mechanism Design) 관점에서 분석하여, **진입 조건 설계 = 메커니즘 설계**임을 수학적으로 증명한다. 진입 조건의 시빌 저항력을 ROI로 정량화하며 (정리 B.9), 애플리케이션별 최적 진입 조건 선택 가이드라인을 제공한다 (Degree-based: ROI 6567% vs Vouch-from-Trusted: ROI -33.8%).
 
 **주요 기여:**
 1. **기존 문헌 교정**: 시빌 방어 불가능성을 엄격히 증명 (Impossibility Result)
@@ -176,8 +176,8 @@ SybilGuard (2006) 이후 15년간, 학계는 "더 정교한 그래프 분석 알
 - **정리 B.9**: 진입 조건의 시빌 저항력을 ROI로 정량화 ($R(\phi) = \min\{n_m : \text{ROI} > 0\}$)
 
 구체적 수치 예시:
-- Degree-based: 공격 ROI = 900% ✅ (공격 합리적)
-- Vouch-from-Trusted: 공격 ROI = -75.6% ❌ (공격 비합리적)
+- Degree-based: 공격 ROI = 6567% ✅ (공격 합리적)
+- Vouch-from-Trusted: 공격 ROI = -33.8% ❌ (공격 비합리적)
 
 이는 **진입 조건 설계 = 메커니즘 설계**임을 수학적으로 증명하며, 애플리케이션별 최적 진입 조건 선택 가이드라인을 제공한다.
 

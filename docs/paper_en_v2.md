@@ -18,7 +18,7 @@ This core slogan summarizes our design philosophy. We propose the Entry Action F
 
 **Practical Implementation - 1000× Scalability through ZK-Rollup:** We address the biggest barrier to vouching networks—gas costs—through a zero-knowledge proof-based ZK-Rollup architecture in SYB (Social Vouch System). By performing complex graph updates and score calculations off-chain and verifying only their correctness on-chain, we achieve **125-1000× cost reduction** compared to pure on-chain approaches (for 100 transactions: pure on-chain $10M$ gas → ZK-Rollup $500K$ gas). Our implementation using Sparse Merkle Trees, Circom, Groth16, and Poseidon hashing demonstrates practical viability on Ethereum mainnet (Layer 2) (Sepolia deployment: 50 users, 450+ vouches).
 
-**Game-Theoretic Foundation:** We analyze vouching networks from the perspectives of Incentive Compatibility, Nash Equilibrium, and Mechanism Design, mathematically proving that **entry condition design = mechanism design**. We quantify the Sybil resistance of entry conditions via ROI (Theorem B.9) and provide guidelines for optimal entry condition selection by application type (Degree-based: ROI 900% vs Vouch-from-Trusted: ROI -75.6%).
+**Game-Theoretic Foundation:** We analyze vouching networks from the perspectives of Incentive Compatibility, Nash Equilibrium, and Mechanism Design, mathematically proving that **entry condition design = mechanism design**. We quantify the Sybil resistance of entry conditions via ROI (Theorem B.9) and provide guidelines for optimal entry condition selection by application type (Degree-based: ROI 6567% vs Vouch-from-Trusted: ROI -33.8%).
 
 **Key Contributions:**
 1. **Correction of Existing Literature**: Rigorous proof of Sybil defense impossibility (Impossibility Result)
@@ -2259,15 +2259,15 @@ $$\text{ROI} = \frac{n_m \cdot 100 - 1.5 \cdot n_m}{1.5 \cdot n_m} = \frac{98.5}
 - Entry requirement: Vouch from trusted set $T$ (size $|T| = 10$)
 - Benefit per account: $b_m = \$100$
 - Setup cost: $c_{\text{setup}} = \$1$
-- Social engineering cost to obtain vouch from $T$: $c_{\text{SE}} = \$50$ per account
+- Social engineering cost to obtain vouch from $T$: $c_{\text{SE}} = \$150$ per account
 
 **Attacker Strategy**: Social engineering
 - For each Sybil account, must socially engineer one member of $T$
-- Total cost: $n_m \cdot (1 + 50) = 51 \cdot n_m$
+- Total cost: $n_m \cdot (1 + 150) = 151 \cdot n_m$
 - Benefit: $n_m \cdot 100$ (if all succeed)
 
 **ROI**:
-$$\text{ROI} = \frac{n_m \cdot 100 - 51 \cdot n_m}{51 \cdot n_m} = \frac{49}{51} \approx -4\%$$
+$$\text{ROI} = \frac{n_m \cdot 100 - 151 \cdot n_m}{151 \cdot n_m} = \frac{-51}{151} \approx -33.8\%$$
 
 **Result**: Attack is unprofitable. $R(\phi_t) = \infty$ (attack never profitable).
 
